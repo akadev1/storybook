@@ -46,7 +46,7 @@
     "@types/semver": "^7.3.4",
     "commander": "^12.1.0",
     "create-storybook": "workspace:*",
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "^7.0.5",
     "envinfo": "^7.7.3",
     "fd-package-json": "^1.2.0",
     "find-up": "^5.0.0",
