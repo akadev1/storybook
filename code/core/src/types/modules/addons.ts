@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { FC, PropsWithChildren, ReactElement, ReactNode } from 'react';
 
-import type { ListItem } from '../../components';
 import type { TestProviderConfig, TestingModuleProgressReportProgress } from '../../core-events';
 import type { RenderData as RouterData } from '../../router/types';
 import type { ThemeVars } from '../../theming/types';
 import type { API_SidebarOptions } from './api';
-import type { API_HashEntry, API_StatusState, API_StatusUpdate } from './api-stories';
+import type { API_HashEntry, API_StoryEntry } from './api-stories';
 import type {
   Args,
   ArgsStoryFn as ArgsStoryFnForFramework,
@@ -393,7 +392,7 @@ export interface Addon_BaseType {
   /** @unstable */
   paramKey?: string;
   /** @unstable */
-  disabled?: boolean;
+  disabled?: boolean | ((parameters: API_StoryEntry['parameters']) => boolean);
   /** @unstable */
   hidden?: boolean;
 }
@@ -482,11 +481,12 @@ export interface Addon_TestProviderType<
   render?: (state: TestProviderConfig & Addon_TestProviderState<Details, Config>) => ReactNode;
   sidebarContextMenu?: (options: {
     context: API_HashEntry;
-    state: Addon_TestProviderState<Details>;
+    state: TestProviderConfig & Addon_TestProviderState<Details, Config>;
   }) => ReactNode;
-  mapStatusUpdate?: (
-    state: Addon_TestProviderState<Details>
-  ) => API_StatusUpdate | ((state: API_StatusState) => API_StatusUpdate);
+  stateUpdater?: (
+    state: TestProviderConfig & Addon_TestProviderState<Details, Config>,
+    update: Partial<Addon_TestProviderState<Details, Config>>
+  ) => void | Partial<TestProviderConfig & Addon_TestProviderState<Details, Config>>;
   runnable?: boolean;
   watchable?: boolean;
 }
